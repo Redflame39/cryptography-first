@@ -214,7 +214,7 @@ public class Controller {
             case "rus":
                 for (int i = 0; i < key.length(); i++) {
                     char ch = key.charAt(i);
-                    if ((ch >= 'а' && ch <= 'я') || (ch >= 'А' && ch <= 'Я')) {
+                    if ((ch >= 'а' && ch <= 'я') || (ch >= 'А' && ch <= 'Я') || ch == 'ё' || ch == 'Ё') {
                         sb.append(ch);
                     }
                 }
