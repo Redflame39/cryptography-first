@@ -53,6 +53,10 @@ public class RailFenceEncryption {
     }
 
     public void decryptRailFence(int key) {
+        if (key == 1) {
+            this.decryptedText = this.sourceText;
+            return;
+        }
         StringBuilder result = new StringBuilder();
         char[][] matrix = new char[key][sourceText.length()];
         for (int i = 0; i < key; i++) {

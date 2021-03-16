@@ -1,8 +1,6 @@
 package model;
 
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Stack;
+import java.util.*;
 
 public class PleifeirEncryption {
 
@@ -49,8 +47,12 @@ public class PleifeirEncryption {
     }
 
     private void buildKey(String key) {
-        StringBuilder sb = new StringBuilder(key);
+        StringBuilder sb = new StringBuilder();
 
+        for (int i = 0; i < key.length(); i++) {
+            if (!sb.toString().contains(Character.toString(key.charAt(i))))
+                sb.append(key.charAt(i));
+        }
         for (int i = 0; i < alphabet.length; i++) {
             if (!sb.toString().contains(Character.toString(alphabet[i])))
                 sb.append(alphabet[i]);
@@ -142,7 +144,7 @@ public class PleifeirEncryption {
     }
 
     public void decryptPleifeir(String key) {
-        buildKey(key);
+        buildKey(key.toUpperCase(Locale.ROOT));
 
         StringBuilder result = new StringBuilder();
 
@@ -151,6 +153,23 @@ public class PleifeirEncryption {
             result.append(decryptBigram(c1, c2));
         }
 
-        this.decryptedText = result.toString();
+        this.decryptedText = removeRedundantXY(result.toString());
+    }
+
+    private String removeRedundantXY(String text) {
+        char[] str = text.toCharArray();
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < str.length - 2; i++) {
+            if (str[i] == str[i + 2] && str[i + 1] == 'X')
+                str[i+1] = ' ';
+            else if (str[i] == 'X' && str[i+2] == 'X' && str[i + 1] == 'Y')
+                str[i+1] = ' ';
+            if (str[i] != ' ')
+                result.append(str[i]);
+        }
+        result.append(str[str.length - 2]);
+        if (str[str.length - 1] != 'X' && str[str.length - 1] != 'Y')
+            result.append(str[str.length - 1]);
+        return result.toString();
     }
 }

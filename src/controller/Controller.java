@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 
 import model.*;
@@ -45,6 +46,9 @@ public class Controller {
     private TextArea outputText;
 
     @FXML
+    private TextFlow pleifeirNote;
+
+    @FXML
     void initialize() {
         assert encryption != null : "fx:id=\"encryption\" was not injected: check your FXML file 'sample.fxml'.";
         assert encrypt != null : "fx:id=\"encrypt\" was not injected: check your FXML file 'sample.fxml'.";
@@ -68,6 +72,8 @@ public class Controller {
 
     @FXML
     private void handleEncrypt() {
+
+        pleifeirNote.setVisible(false);
 
         String inputMessage;
 
@@ -127,6 +133,8 @@ public class Controller {
     @FXML
     private void handleDecrypt() {
 
+        pleifeirNote.setVisible(false);
+
         String inputMessage;
 
         if (outputType.getSelectedToggle() == toFileBtn) {
@@ -168,6 +176,7 @@ public class Controller {
                 writeData(railFence.getDecryptedText(), "output_decrypted.txt");
                 break;
             case "Шифр Плейфейра":
+                pleifeirNote.setVisible(true);
                 PleifeirEncryption pleifeirEncryption = new PleifeirEncryption(inputMessage);
                 pleifeirEncryption.decryptPleifeir(key);
                 writeData(pleifeirEncryption.getDecryptedText(), "output_decrypted.txt");
@@ -237,7 +246,7 @@ public class Controller {
         switch (type) {
             case 1: //set type to 1 if key must be digit-only
                 for (int i = 0; i < key.length(); i++) {
-                    if (Character.isDigit(key.charAt(i)) || key.charAt(i) == '-')
+                    if (Character.isDigit(key.charAt(i))/* || key.charAt(i) == '-'*/)
                         result.append(key.charAt(i));
                 }
                 break;
