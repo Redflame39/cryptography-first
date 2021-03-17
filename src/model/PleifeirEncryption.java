@@ -49,6 +49,8 @@ public class PleifeirEncryption {
     private void buildKey(String key) {
         StringBuilder sb = new StringBuilder();
 
+        key = key.replaceAll("I", "J");
+
         for (int i = 0; i < key.length(); i++) {
             if (!sb.toString().contains(Character.toString(key.charAt(i))))
                 sb.append(key.charAt(i));
